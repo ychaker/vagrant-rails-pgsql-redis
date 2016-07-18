@@ -1,0 +1,3 @@
+---
+- name: Install puma gem
+  command: /bin/bash -l -c 'gem install puma --no-ri --no-rdoc'

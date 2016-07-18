@@ -1,0 +1,64 @@
+---
+# Basics
+- hosts:  all
+  become: true
+  roles:
+    - bearandgiraffe.base
+    - bearandgiraffe.ruby
+    - {
+      role:           bearandgiraffe.vim,
+      vim_username:   '{{ username }}',
+      vim_group_name: '{{ group_name }}'
+    }
+    - bearandgiraffe.node
+    - bearandgiraffe.phantomjs
+
+# DB
+- hosts:  all
+  become: true
+  roles:
+    - {
+      role:                   bearandgiraffe.postgresql,
+      postgresql_db_name:     '{{ db_name }}',
+      postgresql_db_owner:    '{{ db_user }}',
+      postgresql_db_password: '{{ db_password }}'
+    }
+
+# Servers
+- hosts:  all
+  become: true
+  roles:
+    - {
+      role:               bearandgiraffe.nginx,
+      nginx_home_path:    '{{ path }}',
+      nginx_db_user:      '{{ db_user }}',
+      nginx_db_password:  '{{ db_password }}',
+      nginx_server_type:  '{{ server_type }}'
+    }
+
+- hosts:  all
+  become: '{{ username }}'
+  roles:
+    - puma
+
+# Remove Apache
+- hosts:  all
+  user:   vagrant
+  tasks:
+    - name: Ramove Apache2
+      apt: name={{ item }} state=absent purge=yes force=yes
+      with_items:
+       - apache2
+       - apache2-utils
+      become: true
+
+# Rails
+- hosts:  all
+  roles:
+    - rails
+
+# Redis
+- hosts:  all
+  become: true
+  roles:
+    - bearandgiraffe.redis

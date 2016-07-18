@@ -1,0 +1,19 @@
+---
+target:       virtualbox
+path:         /vagrant
+
+profile_d_path: '{{ user_home_path }}/profile.d'
+
+app_env:        development
+app_name:       test
+
+username:       '{{ "vagrant" if target == "virtualbox" else app_name }}'
+group_name:     '{{ username }}'
+user_home_path: '/home/{{ username }}'
+
+db_name:        site
+db_user:        vagrant
+db_password:    vagrant
+
+server_type:    nginx_puma
+server_name:    localhost
