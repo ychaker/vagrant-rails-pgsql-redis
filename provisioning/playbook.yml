@@ -1,4 +1,13 @@
 ---
+- hosts: all
+  gather_facts: False
+  become: true
+
+  tasks:
+  - name: install python 2
+    raw: test -e /usr/bin/python || (apt -y update && apt install -y python-minimal)
+
+
 # Basics
 - hosts:  all
   become: true
@@ -62,3 +71,14 @@
   become: true
   roles:
     - bearandgiraffe.redis
+
+# Heroku
+- hosts:  all
+  become: true
+  roles:
+    - bearandgiraffe.heroku-cli
+
+- hosts: all
+  become: true
+  roles:
+    - bearandgiraffe.selenium
