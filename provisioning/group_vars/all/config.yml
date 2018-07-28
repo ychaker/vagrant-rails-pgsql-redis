@@ -18,4 +18,4 @@ db_password:    vagrant
 server_type:    nginx_puma
 server_name:    localhost
 
-ruby_ruby_version: ruby-2.3.3
+ruby_ruby_version: ruby-2.5.1
